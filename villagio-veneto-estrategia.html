@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villágio Vêneto — Estratégia Comercial 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--navy:#0D1F3C;--navy2:#142A50;--blue:#1A56A0;--blue-lt:#EBF2FC;--amber:#C4832A;--amber-lt:#FDF3E3;--cream:#F7F5F0;--stone:#E4E0D8;--mist:#F0EDE8;--ink:#16150F;--grey:#7A7870;--grey-lt:#C0BDB5;--green:#1A6B45;--green-lt:#E6F4ED;--red:#8B2B2B;--red-lt:#FAEBEB;--purple:#4A3EA8;--purple-lt:#EEEDFE;--white:#FFFFFF;--r:8px;--r-lg:14px;--shadow:0 2px 20px rgba(13,31,60,.08);--shadow-lg:0 8px 40px rgba(13,31,60,.13)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Sora',sans-serif;background:var(--cream);color:var(--ink);font-size:15px;line-height:1.7;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;line-height:1.2}
+a{color:inherit;text-decoration:none}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,31,60,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.07);padding:0 2rem;display:flex;align-items:center;height:58px}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.05rem;color:#fff;margin-right:auto;letter-spacing:.01em}
+.nav-brand span{color:var(--amber)}
+.nav-links{display:flex;gap:.1rem;list-style:none;overflow-x:auto}
+.nav-links li a{display:block;padding:.45rem .75rem;font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.55);border-radius:4px;transition:color .2s,background .2s;white-space:nowrap}
+.nav-links li a:hover,.nav-links li a.active{color:#fff;background:rgba(255,255,255,.1)}
+
+#hero{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;justify-content:center;padding:9rem 2rem 5rem;position:relative;overflow:hidden}
+.hero-geo{position:absolute;inset:0;pointer-events:none}
+.hero-geo::before{content:'';position:absolute;top:-120px;right:-160px;width:680px;height:680px;border-radius:50%;background:radial-gradient(circle,rgba(26,86,160,.35) 0%,transparent 70%)}
+.hero-geo::after{content:'';position:absolute;bottom:60px;left:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(196,131,42,.12) 0%,transparent 70%)}
+.hero-inner{max-width:900px;margin:0 auto;position:relative;z-index:1}
+.hero-eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:1.4rem}
+#hero h1{font-size:clamp(2.6rem,6vw,4.8rem);color:#fff;margin-bottom:1.2rem;line-height:1.1}
+#hero h1 em{font-style:normal;color:var(--amber)}
+.hero-sub{font-size:1.05rem;color:rgba(255,255,255,.55);max-width:560px;margin-bottom:3rem;line-height:1.7}
+.hero-pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:4rem}
+.hero-pill{padding:.4rem 1rem;border:1px solid rgba(255,255,255,.18);border-radius:999px;font-size:.75rem;font-weight:500;color:rgba(255,255,255,.65);transition:border-color .2s,color .2s}
+.hero-pill:hover{border-color:var(--amber);color:var(--amber)}
+.hero-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);overflow:hidden;max-width:760px}
+.hm{background:rgba(255,255,255,.05);padding:1.4rem 1.2rem;text-align:center;transition:background .2s}
+.hm:hover{background:rgba(255,255,255,.09)}
+.hm-val{display:block;font-size:2rem;font-weight:700;color:#fff;line-height:1;margin-bottom:.35rem}
+.hm-lbl{font-size:.7rem;color:rgba(255,255,255,.45);line-height:1.3}
+
+section{padding:6rem 2rem}
+.container{max-width:1060px;margin:0 auto}
+.section-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:.75rem}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--navy);margin-bottom:.6rem}
+.section-sub{font-size:.95rem;color:var(--grey);max-width:580px;margin-bottom:3rem;line-height:1.7}
+.divider{width:48px;height:3px;background:var(--amber);border-radius:2px;margin-bottom:2rem}
+section:nth-child(even){background:var(--white)}
+section:nth-child(odd){background:var(--cream)}
+#hero,#cta{background:var(--navy) !important}
+
+.insight{background:var(--navy);border-radius:var(--r-lg);padding:1.6rem 2rem;margin-top:2.5rem;border-left:4px solid var(--amber)}
+.insight p{color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.75}
+.insight strong{color:var(--amber)}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2.5rem}
+.kpi-card{background:var(--white);border:1px solid var(--stone);border-radius:var(--r-lg);padding:1.4rem 1.6rem;border-top:3px solid var(--amber);box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+.kpi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.kpi-card.blue{border-top-color:var(--blue)}.kpi-card.green{border-top-color:var(--green)}
+.kpi-val{font-size:2.2rem;font-weight:700;color:var(--navy);line-height:1}
+.kpi-lbl{font-size:.78rem;font-weight:600;color:var(--grey);margin-top:.3rem;text-transform:uppercase;letter-spacing:.05em}
+.kpi-sub{font-size:.75rem;color:var(--grey-lt);margin-top:.15rem}
+
+.bar-group{display:flex;flex-direction:column;gap:.55rem}
+.bar-row{display:flex;align-items:center;gap:.75rem}
+.bar-label{font-size:.82rem;color:var(--ink);min-width:150px}
+.bar-track{flex:1;height:14px;background:var(--stone);border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;transition:width 1.2s cubic-bezier(.16,1,.3,1);width:0}
+.bar-val{font-size:.8rem;font-weight:600;color:var(--navy);min-width:36px;text-align:right}
+
+.age-chart{display:flex;align-items:flex-end;gap:6px;height:120px;margin-top:1.2rem}
+.age-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.age-bar{width:100%;border-radius:4px 4px 0 0;transition:height 1.2s cubic-bezier(.16,1,.3,1)}
+.age-lbl{font-size:.65rem;color:var(--grey)}
+.age-val{font-size:.7rem;font-weight:600;color:var(--navy)}
+
+.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.three-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+
+.tag{display:inline-block;padding:.25rem .75rem;border-radius:999px;font-size:.7rem;font-weight:600}
+.tag-blue{background:var(--blue-lt);color:var(--blue)}.tag-amber{background:var(--amber-lt);color:var(--amber)}
+.tag-green{background:var(--green-lt);color:var(--green)}.tag-red{background:var(--red-lt);color:var(--red)}
+.tag-grey{background:var(--mist);color:var(--grey)}.tag-navy{background:var(--navy);color:rgba(255,255,255,.8)}
+.tag-purple{background:var(--purple-lt);color:var(--purple)}
+
+.persona-card{background:var(--white);border:1px solid var(--stone);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+.persona-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.persona-header{padding:1.8rem 1.6rem 1.2rem;text-align:center;border-bottom:1px solid var(--stone)}
+.persona-emoji{font-size:2.4rem;margin-bottom:.8rem;display:block}
+.persona-name{font-size:1.15rem;color:var(--navy);margin-bottom:.2rem}
+.persona-role{font-size:.78rem;color:var(--grey)}
+.persona-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem;margin-top:.9rem}
+.persona-body{padding:1.4rem 1.6rem}
+.persona-row{margin-bottom:.7rem}
+.persona-row .lbl{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--grey);display:block;margin-bottom:.1rem}
+.persona-row .val{font-size:.84rem;color:var(--ink)}
+.persona-accent-1{border-top:3px solid var(--blue)}.persona-accent-2{border-top:3px solid var(--amber)}.persona-accent-3{border-top:3px solid var(--red)}
+
+/* QUALITATIVE PERSONAS */
+.qp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.2rem}
+.qp-card{background:var(--white);border:1px solid var(--stone);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+.qp-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.qp-head{padding:1.1rem 1.3rem .9rem;display:flex;gap:11px;align-items:flex-start;border-bottom:1px solid var(--stone)}
+.qp-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.qp-name{font-size:.95rem;font-weight:600;color:var(--navy);margin-bottom:2px;font-family:'Playfair Display',serif}
+.qp-role{font-size:.72rem;color:var(--grey);margin-bottom:5px}
+.qp-tags{display:flex;flex-wrap:wrap;gap:3px}
+.qp-dna{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:.8rem 1.1rem;border-bottom:1px solid var(--stone);background:var(--cream)}
+.dna-item{background:var(--white);border-radius:6px;padding:.4rem .55rem}
+.dna-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;color:var(--grey-lt);display:block;margin-bottom:1px}
+.dna-val{font-size:.76rem;font-weight:500;color:var(--ink)}
+.qp-body{padding:.9rem 1.1rem}
+.qp-section{margin-bottom:.8rem}
+.qp-section h5{font-family:'Sora',sans-serif;font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--grey);margin-bottom:.4rem}
+.qp-section ul{list-style:none;display:flex;flex-direction:column;gap:.28rem}
+.qp-section li{font-size:.8rem;color:var(--ink);padding-left:13px;position:relative;line-height:1.5}
+.qp-section li::before{content:'·';position:absolute;left:3px;font-weight:700;color:var(--amber)}
+.qp-quote{margin:0 1.1rem 1.1rem;background:var(--cream);border-radius:7px;padding:.65rem .9rem;font-size:.77rem;color:var(--grey);font-style:italic;line-height:1.6;border-left:3px solid}
+.qp-1{border-top:3px solid var(--blue)}.qp-2{border-top:3px solid var(--green)}
+.qp-3{border-top:3px solid var(--amber)}.qp-4{border-top:3px solid var(--red)}.qp-5{border-top:3px solid var(--purple)}
+
+/* MANIFESTO */
+.manifesto-box{background:var(--navy);border-radius:var(--r-lg);padding:2rem 2.4rem;text-align:center;margin-bottom:2.5rem;position:relative;overflow:hidden}
+.manifesto-box::before{content:'';position:absolute;top:-60px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(196,131,42,.15) 0%,transparent 70%)}
+.m-eyebrow{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.7rem}
+.m-line{font-size:clamp(1.2rem,2.5vw,1.7rem);color:#fff;font-family:'Playfair Display',serif;line-height:1.3;margin-bottom:.55rem}
+.m-line em{font-style:normal;color:var(--amber)}
+.m-sub{font-size:.83rem;color:rgba(255,255,255,.5);max-width:520px;margin:0 auto;line-height:1.65}
+
+.empathy-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.empathy-cell{border-radius:var(--r-lg);padding:1.4rem 1.5rem;border-top:3px solid}
+.ec-vê{background:var(--blue-lt);border-color:var(--blue)}.ec-ouve{background:var(--green-lt);border-color:var(--green)}
+.ec-pensa{background:var(--amber-lt);border-color:var(--amber)}.ec-faz{background:var(--mist);border-color:var(--grey)}
+.ec-dores{background:var(--red-lt);border-color:var(--red)}.ec-ganhos{background:var(--green-lt);border-color:var(--green)}
+.empathy-cell h4{font-family:'Sora',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.9rem}
+.ec-vê h4{color:var(--blue)}.ec-ouve h4{color:var(--green)}.ec-pensa h4{color:var(--amber)}.ec-faz h4{color:var(--navy)}.ec-dores h4{color:var(--red)}.ec-ganhos h4{color:var(--green)}
+.empathy-cell ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.empathy-cell ul li{font-size:.84rem;color:var(--ink);padding-left:1rem;position:relative}
+.empathy-cell ul li::before{content:'·';position:absolute;left:0;font-weight:700}
+
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.swot-cell{border-radius:var(--r-lg);padding:1.5rem 1.6rem;border-top:4px solid}
+.swot-s{background:var(--green-lt);border-color:var(--green)}.swot-w{background:var(--red-lt);border-color:var(--red)}
+.swot-o{background:var(--blue-lt);border-color:var(--blue)}.swot-t{background:var(--amber-lt);border-color:var(--amber)}
+.swot-cell h3{font-family:'Sora',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem}
+.swot-s h3{color:var(--green)}.swot-w h3{color:var(--red)}.swot-o h3{color:var(--blue)}.swot-t h3{color:var(--amber)}
+.swot-cell ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.swot-cell li{font-size:.85rem;color:var(--ink);padding-left:1.1rem;position:relative}
+.swot-cell li::before{content:'→';position:absolute;left:0;font-size:.75rem}
+.swot-s li::before{color:var(--green)}.swot-w li::before{color:var(--red)}.swot-o li::before{color:var(--blue)}.swot-t li::before{color:var(--amber)}
+
+.strat-block{background:var(--white);border:1px solid var(--stone);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);margin-bottom:1.2rem;transition:box-shadow .2s}
+.strat-block:hover{box-shadow:var(--shadow-lg)}
+.strat-header{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.5rem;background:var(--mist);border-bottom:1px solid var(--stone);cursor:pointer}
+.strat-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;color:#fff;flex-shrink:0}
+.strat-title{font-size:1rem;font-weight:600;color:var(--navy);flex:1}
+.strat-body{padding:0;overflow:hidden;max-height:0;transition:max-height .4s ease,padding .3s ease}
+.strat-block.open .strat-body{max-height:600px;padding:1.4rem 1.5rem}
+.strat-toggle{font-size:1.2rem;color:var(--grey);transition:transform .3s;margin-left:auto}
+.strat-block.open .strat-toggle{transform:rotate(45deg)}
+.strat-actions{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.strat-action{background:var(--mist);border-radius:var(--r);padding:1rem 1.1rem;border-left:3px solid}
+.strat-action h4{font-family:'Sora',sans-serif;font-size:.85rem;font-weight:600;color:var(--navy);margin-bottom:.35rem}
+.strat-action p{font-size:.8rem;color:var(--grey);line-height:1.6}
+
+.channels-table{width:100%;border-collapse:collapse;font-size:.84rem;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow)}
+.channels-table thead tr{background:var(--navy)}
+.channels-table thead th{padding:.9rem 1rem;text-align:left;font-size:.7rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.channels-table tbody tr{border-bottom:1px solid var(--stone);transition:background .15s}
+.channels-table tbody tr:hover{background:var(--blue-lt)}
+.channels-table tbody tr:nth-child(even){background:var(--mist)}
+.channels-table td{padding:.85rem 1rem;color:var(--ink);vertical-align:middle}
+.channels-table td:first-child{font-weight:600;color:var(--navy)}
+
+.funnel{display:flex;flex-direction:column;gap:.8rem}
+.funnel-row{display:flex;align-items:center;gap:1rem}
+.funnel-label{font-size:.85rem;font-weight:500;color:var(--navy);min-width:190px}
+.funnel-track{flex:1;height:32px;background:var(--stone);border-radius:6px;overflow:hidden}
+.funnel-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:.75rem;font-weight:600;color:#fff;transition:width 1.4s cubic-bezier(.16,1,.3,1);width:0}
+.funnel-pct{font-size:.8rem;font-weight:600;color:var(--grey);min-width:38px;text-align:right}
+
+.action-table{width:100%;border-collapse:collapse;font-size:.84rem;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);margin-bottom:2rem}
+.action-table thead tr{background:var(--navy)}
+.action-table thead th{padding:.9rem 1rem;text-align:left;font-size:.68rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.action-table tbody tr{border-bottom:1px solid var(--stone);transition:background .15s}
+.action-table tbody tr:hover{background:var(--blue-lt)}
+.action-table tbody tr:nth-child(even){background:var(--mist)}
+.action-table td{padding:.9rem 1rem;color:var(--ink);vertical-align:middle}
+.action-table td:first-child{font-weight:700;color:var(--blue)}
+
+.questions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+.question-card{border-radius:var(--r-lg);padding:1.5rem;border-top:3px solid}
+.question-card h4{font-size:.95rem;font-weight:600;color:var(--navy);margin-bottom:.8rem;line-height:1.4}
+.question-card p{font-size:.82rem;color:var(--grey);line-height:1.65}
+
+/* MAP */
+#gyn-map{width:100%;height:580px;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-lg);margin-top:1.4rem}
+.map-controls{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.6rem}
+.map-btn{padding:.45rem 1rem;border-radius:999px;font-size:.75rem;font-weight:500;cursor:pointer;border:1px solid var(--stone);background:var(--white);color:var(--grey);transition:all .15s}
+.map-btn:hover,.map-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.map-legend{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;margin-top:1rem;font-size:.78rem;color:var(--grey)}
+.leg-item{display:flex;align-items:center;gap:5px}
+.leg-dot{width:12px;height:12px;border-radius:50%;border:2px solid rgba(255,255,255,.8)}
+.leaflet-popup-content-wrapper{border-radius:10px !important;box-shadow:0 4px 20px rgba(0,0,0,.2) !important;padding:0 !important}
+.leaflet-popup-content{margin:0 !important}
+.pop-inner{padding:12px 15px;min-width:155px}
+.pop-name{font-size:13px;font-weight:600;color:#0D1F3C;margin-bottom:2px}
+.pop-city{font-size:11px;color:#7A7870;margin-bottom:5px}
+.pop-count{font-size:22px;font-weight:700;line-height:1}
+.pop-count span{font-size:11px;font-weight:400;color:#7A7870}
+
+#cta{padding:5rem 2rem;text-align:center}
+#cta h2{color:var(--amber);font-size:1.6rem;margin-bottom:.8rem}
+#cta p{color:rgba(255,255,255,.6);max-width:540px;margin:0 auto 2rem;font-size:.95rem}
+.cta-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-lg);padding:1.8rem 2rem;max-width:640px;margin:0 auto;font-size:.9rem;color:rgba(255,255,255,.75);line-height:1.75}
+.cta-box strong{color:var(--amber)}
+footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.07);padding:2rem;text-align:center;font-size:.78rem;color:rgba(255,255,255,.3)}
+
+@media(max-width:768px){
+  .hero-metrics,.questions-grid{grid-template-columns:repeat(2,1fr)}
+  .two-cols,.three-cols,.swot-grid,.empathy-grid,.strat-actions,.qp-grid{grid-template-columns:1fr}
+  .bar-label{min-width:110px;font-size:.75rem}
+  .funnel-label{min-width:120px;font-size:.78rem}
+  .nav-links{display:none}
+  #gyn-map{height:380px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Villágio <span>Vêneto</span></div>
+  <ul class="nav-links">
+    <li><a href="#demografico">Perfil</a></li>
+    <li><a href="#personas">Personas</a></li>
+    <li><a href="#campo">Campo</a></li>
+    <li><a href="#empatia">Empatia</a></li>
+    <li><a href="#swot">SWOT</a></li>
+    <li><a href="#estrategias">Estratégias</a></li>
+    <li><a href="#canais">Canais</a></li>
+    <li><a href="#mapa">Mapa</a></li>
+    <li><a href="#funil">Funil</a></li>
+    <li><a href="#plano">Plano</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-geo"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow reveal">Inteligência Comercial · 2026</p>
+    <h1 class="reveal" style="transition-delay:.1s">Análise de Perfil<br>de Clientes &<br><em>Estratégia de Vendas</em></h1>
+    <p class="hero-sub reveal" style="transition-delay:.2s">195 registros analisados · Dezembro 2025 a Março 2026 · Frameworks estratégicos para sustentar e acelerar as vendas pós-lançamento.</p>
+    <div class="hero-pills reveal" style="transition-delay:.3s">
+      <span class="hero-pill">Personas Quantitativas</span>
+      <span class="hero-pill">Personas de Campo</span>
+      <span class="hero-pill">Mapa de Empatia</span>
+      <span class="hero-pill">Matriz SWOT</span>
+      <span class="hero-pill">Estratégias</span>
+      <span class="hero-pill">Mapa de Compradores</span>
+      <span class="hero-pill">Plano de Ação</span>
+    </div>
+    <div class="hero-metrics reveal" style="transition-delay:.4s">
+      <div class="hm"><span class="hm-val">195</span><span class="hm-lbl">Registros<br>totais</span></div>
+      <div class="hm"><span class="hm-val">44</span><span class="hm-lbl">Idade<br>média</span></div>
+      <div class="hm"><span class="hm-val">89%</span><span class="hm-lbl">Compradores<br>em GO</span></div>
+      <div class="hm"><span class="hm-val">77%</span><span class="hm-lbl">Finalidade<br>moradia</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 DEMOGRAFICO -->
+<section id="demografico">
+  <div class="container">
+    <p class="section-eyebrow reveal">01 · Perfil Demográfico</p>
+    <h2 class="section-title reveal">Quem está comprando</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Distribuição demográfica completa dos 195 registros de clientes do empreendimento.</p>
+    <div class="kpi-grid reveal">
+      <div class="kpi-card"><div class="kpi-val">138</div><div class="kpi-lbl">Vendas no lançamento</div><div class="kpi-sub">Apenas dezembro/2025</div></div>
+      <div class="kpi-card blue"><div class="kpi-val">57</div><div class="kpi-lbl">Vendas pós-lançamento</div><div class="kpi-sub">Janeiro a março/2026</div></div>
+      <div class="kpi-card green"><div class="kpi-val">34%</div><div class="kpi-lbl">Market share HUNA</div><div class="kpi-sub">Maior parceira comercial</div></div>
+      <div class="kpi-card"><div class="kpi-val">25</div><div class="kpi-lbl">Vendas por indicação</div><div class="kpi-sub">Sem programa formal</div></div>
+    </div>
+    <div class="two-cols">
+      <div class="reveal">
+        <p class="section-eyebrow" style="margin-bottom:.6rem">Sexo</p>
+        <div class="bar-group">
+          <div class="bar-row"><span class="bar-label">Homem</span><div class="bar-track"><div class="bar-fill" style="background:var(--blue)" data-pct="59"></div></div><span class="bar-val">59%</span></div>
+          <div class="bar-row"><span class="bar-label">Mulher</span><div class="bar-track"><div class="bar-fill" style="background:var(--amber)" data-pct="22"></div></div><span class="bar-val">22%</span></div>
+          <div class="bar-row"><span class="bar-label">Não informado</span><div class="bar-track"><div class="bar-fill" style="background:var(--grey-lt)" data-pct="19"></div></div><span class="bar-val">19%</span></div>
+        </div>
+        <p class="section-eyebrow" style="margin-top:2rem;margin-bottom:.6rem">Estado Civil</p>
+        <div class="bar-group">
+          <div class="bar-row"><span class="bar-label">Casado</span><div class="bar-track"><div class="bar-fill" style="background:var(--navy)" data-pct="54"></div></div><span class="bar-val">54%</span></div>
+          <div class="bar-row"><span class="bar-label">Solteiro</span><div class="bar-track"><div class="bar-fill" style="background:var(--blue)" data-pct="28"></div></div><span class="bar-val">28%</span></div>
+          <div class="bar-row"><span class="bar-label">Divorciado</span><div class="bar-track"><div class="bar-fill" style="background:var(--amber)" data-pct="11"></div></div><span class="bar-val">11%</span></div>
+          <div class="bar-row"><span class="bar-label">Outros</span><div class="bar-track"><div class="bar-fill" style="background:var(--grey-lt)" data-pct="7"></div></div><span class="bar-val">7%</span></div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:.15s">
+        <p class="section-eyebrow" style="margin-bottom:.6rem">Principais Profissões</p>
+        <div class="bar-group">
+          <div class="bar-row"><span class="bar-label">Empresário(a)</span><div class="bar-track"><div class="bar-fill" style="background:var(--navy)" data-pct="100"></div></div><span class="bar-val">88</span></div>
+          <div class="bar-row"><span class="bar-label">Servidor Público</span><div class="bar-track"><div class="bar-fill" style="background:var(--blue)" data-pct="14"></div></div><span class="bar-val">12</span></div>
+          <div class="bar-row"><span class="bar-label">Engenheiro(a)</span><div class="bar-track"><div class="bar-fill" style="background:var(--blue)" data-pct="11"></div></div><span class="bar-val">10</span></div>
+          <div class="bar-row"><span class="bar-label">Militar/Policial</span><div class="bar-track"><div class="bar-fill" style="background:var(--blue)" data-pct="9"></div></div><span class="bar-val">8</span></div>
+          <div class="bar-row"><span class="bar-label">Contador(a)</span><div class="bar-track"><div class="bar-fill" style="background:var(--grey)" data-pct="8"></div></div><span class="bar-val">7</span></div>
+          <div class="bar-row"><span class="bar-label">Médico(a)</span><div class="bar-track"><div class="bar-fill" style="background:var(--grey)" data-pct="7"></div></div><span class="bar-val">6</span></div>
+          <div class="bar-row"><span class="bar-label">Autônomo(a)</span><div class="bar-track"><div class="bar-fill" style="background:var(--grey)" data-pct="7"></div></div><span class="bar-val">6</span></div>
+        </div>
+        <p class="section-eyebrow" style="margin-top:2rem;margin-bottom:.6rem">Canal de Divulgação</p>
+        <div class="bar-group">
+          <div class="bar-row"><span class="bar-label">Internet</span><div class="bar-track"><div class="bar-fill" style="background:var(--blue)" data-pct="100"></div></div><span class="bar-val">75</span></div>
+          <div class="bar-row"><span class="bar-label">Indicação</span><div class="bar-track"><div class="bar-fill" style="background:var(--amber)" data-pct="33"></div></div><span class="bar-val">25</span></div>
+          <div class="bar-row"><span class="bar-label">Facebook</span><div class="bar-track"><div class="bar-fill" style="background:var(--blue)" data-pct="27"></div></div><span class="bar-val">20</span></div>
+          <div class="bar-row"><span class="bar-label">Tenda/Evento</span><div class="bar-track"><div class="bar-fill" style="background:var(--green)" data-pct="19"></div></div><span class="bar-val">14</span></div>
+          <div class="bar-row"><span class="bar-label">Não informado</span><div class="bar-track"><div class="bar-fill" style="background:var(--grey-lt)" data-pct="52"></div></div><span class="bar-val">39</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:2.5rem">
+      <p class="section-eyebrow" style="margin-bottom:.8rem">Faixa Etária</p>
+      <div class="age-chart">
+        <div class="age-col"><span class="age-val">8</span><div class="age-bar" style="background:var(--blue);opacity:.5" data-h="20"></div><span class="age-lbl">18-24</span></div>
+        <div class="age-col"><span class="age-val">6</span><div class="age-bar" style="background:var(--blue);opacity:.55" data-h="15"></div><span class="age-lbl">25-29</span></div>
+        <div class="age-col"><span class="age-val">20</span><div class="age-bar" style="background:var(--blue);opacity:.65" data-h="50"></div><span class="age-lbl">30-34</span></div>
+        <div class="age-col"><span class="age-val">40</span><div class="age-bar" style="background:var(--amber)" data-h="100"></div><span class="age-lbl">35-39</span></div>
+        <div class="age-col"><span class="age-val">32</span><div class="age-bar" style="background:var(--blue);opacity:.85" data-h="80"></div><span class="age-lbl">40-44</span></div>
+        <div class="age-col"><span class="age-val">28</span><div class="age-bar" style="background:var(--blue);opacity:.75" data-h="70"></div><span class="age-lbl">45-49</span></div>
+        <div class="age-col"><span class="age-val">24</span><div class="age-bar" style="background:var(--blue);opacity:.65" data-h="60"></div><span class="age-lbl">50-54</span></div>
+        <div class="age-col"><span class="age-val">15</span><div class="age-bar" style="background:var(--blue);opacity:.55" data-h="37"></div><span class="age-lbl">55-59</span></div>
+        <div class="age-col"><span class="age-val">14</span><div class="age-bar" style="background:var(--blue);opacity:.5" data-h="35"></div><span class="age-lbl">60+</span></div>
+      </div>
+    </div>
+    <div class="insight reveal"><p>O comprador típico é do sexo masculino (59%), casado (54%), com idade entre 35 e 44 anos. <strong>Empresários representam quase 45% da base</strong> — perfil de renda média-alta com capacidade de decisão rápida. O dado mais subutilizado: <strong>indicação gerou 25 vendas sem nenhum programa formal.</strong></p></div>
+  </div>
+</section>
+
+<!-- 02 PERSONAS QUANTITATIVAS -->
+<section id="personas">
+  <div class="container">
+    <p class="section-eyebrow reveal">02 · Personas — Dados Quantitativos</p>
+    <h2 class="section-title reveal">Três arquétipos da base de registros</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Construídos a partir dos 195 registros. Cada persona tem motivações, objeções e gatilhos distintos.</p>
+    <div class="three-cols">
+      <div class="persona-card persona-accent-1 reveal">
+        <div class="persona-header"><span class="persona-emoji">💼</span><h3 class="persona-name">Marcos</h3><p class="persona-role">Empresário Consolidado · 38–52 anos · Casado</p><div class="persona-tags"><span class="tag tag-blue">Perfil majoritário</span><span class="tag tag-green">~45% dos compradores</span></div></div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="lbl">Motivação</span><span class="val">Patrimônio sólido e moradia de qualidade para a família</span></div>
+          <div class="persona-row"><span class="lbl">Canal preferido</span><span class="val">Internet e indicação de pares do mesmo círculo</span></div>
+          <div class="persona-row"><span class="lbl">Decisão</span><span class="val">Rápida quando há confiança e documentação clara</span></div>
+          <div class="persona-row"><span class="lbl">Objeção</span><span class="val">Liquidez do lote e maturidade da infraestrutura</span></div>
+          <div class="persona-row"><span class="lbl">Argumento-chave</span><span class="val">Valorização comprovada, escritura, liberdade para construir</span></div>
+          <div class="persona-row"><span class="lbl">Gatilho</span><span class="val">Lançamento com desconto ou condição especial de prazo</span></div>
+        </div>
+      </div>
+      <div class="persona-card persona-accent-2 reveal" style="transition-delay:.12s">
+        <div class="persona-header"><span class="persona-emoji">🏛️</span><h3 class="persona-name">Renata</h3><p class="persona-role">Servidora Pública · 35–55 anos · Casada/Divorciada</p><div class="persona-tags"><span class="tag tag-amber">Militar · Policial · Servidor</span><span class="tag tag-green">~15% dos compradores</span></div></div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="lbl">Motivação</span><span class="val">Primeiro imóvel próprio e segurança financeira</span></div>
+          <div class="persona-row"><span class="lbl">Canal preferido</span><span class="val">Indicação de colegas e eventos presenciais</span></div>
+          <div class="persona-row"><span class="lbl">Decisão</span><span class="val">Cautelosa — exige visita e documentação em ordem</span></div>
+          <div class="persona-row"><span class="lbl">Objeção</span><span class="val">Prazo de infraestrutura e regularização do terreno</span></div>
+          <div class="persona-row"><span class="lbl">Argumento-chave</span><span class="val">FGTS disponível, certidões em dia, processo claro</span></div>
+          <div class="persona-row"><span class="lbl">Gatilho</span><span class="val">Indicação de colega ou visita acompanhada ao local</span></div>
+        </div>
+      </div>
+      <div class="persona-card persona-accent-3 reveal" style="transition-delay:.24s">
+        <div class="persona-header"><span class="persona-emoji">📐</span><h3 class="persona-name">Diego</h3><p class="persona-role">Profissional Liberal · 28–45 anos · Solteiro</p><div class="persona-tags"><span class="tag tag-red">Médico · Eng. · Advogado</span><span class="tag tag-amber">~12% dos compradores</span></div></div>
+        <div class="persona-body">
+          <div class="persona-row"><span class="lbl">Motivação</span><span class="val">Diversificar portfólio, construir e revender</span></div>
+          <div class="persona-row"><span class="lbl">Canal preferido</span><span class="val">Internet, Instagram e WhatsApp</span></div>
+          <div class="persona-row"><span class="lbl">Decisão</span><span class="val">Analítica — compara TIR, m² e localização</span></div>
+          <div class="persona-row"><span class="lbl">Objeção</span><span class="val">Retorno vs. FII/renda fixa com Selic elevada</span></div>
+          <div class="persona-row"><span class="lbl">Argumento-chave</span><span class="val">Histórico de valorização e demanda por aluguel</span></div>
+          <div class="persona-row"><span class="lbl">Gatilho</span><span class="val">Simulação de retorno financeiro personalizada</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 PERSONAS DE CAMPO -->
+<section id="campo">
+  <div class="container">
+    <p class="section-eyebrow reveal">03 · Personas — Relatos de Campo</p>
+    <h2 class="section-title reveal">Cinco arquétipos identificados pelos corretores</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Extraídos dos relatos manuscritos de vendas reais. Cada perfil foi construído a partir do que os corretores observaram e registraram diretamente no atendimento.</p>
+
+    <div class="manifesto-box reveal">
+      <p class="m-eyebrow">Linha de posicionamento espontânea — relatório de campo, página 13</p>
+      <p class="m-line">"Conexão total com a cidade.<br><em>Desconexão total com a multidão."</em></p>
+      <p class="m-sub">Esta frase foi escrita por um corretor com marcador amarelo — não é uma tagline de agência. É como quem vende o produto todos os dias articula o benefício central em suas próprias palavras. Quando o vendedor chega sozinho a esse nível de síntese, o produto já tem um posicionamento real. Falta apenas formalizá-lo em campanha.</p>
+    </div>
+
+    <div class="qp-grid">
+      <div class="qp-card qp-1 reveal">
+        <div class="qp-head">
+          <div class="qp-avatar" style="background:#EBF2FC">👔</div>
+          <div>
+            <div class="qp-name">O Pai de Família Provedor</div>
+            <div class="qp-role">29–42 anos · Casado · Filhos pequenos · Goiânia</div>
+            <div class="qp-tags"><span class="tag tag-blue" style="font-size:.62rem;padding:.15rem .55rem">Persona dominante</span><span class="tag tag-green" style="font-size:.62rem;padding:.15rem .55rem">Samuel · Alexandre · Ítalo</span></div>
+          </div>
+        </div>
+        <div class="qp-dna">
+          <div class="dna-item"><span class="dna-lbl">Veículo</span><span class="dna-val">Ranger / Toro (pickup)</span></div>
+          <div class="dna-item"><span class="dna-lbl">Roupa</span><span class="dna-val">Jeans casual, tênis sport</span></div>
+          <div class="dna-item"><span class="dna-lbl">Chegada</span><span class="dna-val">Espontânea ou via esposa</span></div>
+          <div class="dna-item"><span class="dna-lbl">Canal</span><span class="dna-val">Instagram, indicação, OLX</span></div>
+        </div>
+        <div class="qp-body">
+          <div class="qp-section">
+            <h5>O que ativa a decisão</h5>
+            <ul>
+              <li>Segurança do condomínio para os filhos</li>
+              <li>Academia, brinquedoteca e piscina coberta</li>
+              <li>Localização estratégica perto da família</li>
+              <li>Esposa inicia o contato — marido fecha no mesmo dia</li>
+            </ul>
+          </div>
+          <div class="qp-section">
+            <h5>Casos reais dos relatos</h5>
+            <ul>
+              <li>Samuel: 29 anos, offshore, filho de 8 meses</li>
+              <li>Alexandre: chegou "corrido" e comprou em 4 horas</li>
+              <li>Ítalo (32 anos): chegou pelo OLX, comprou 3 lotes</li>
+            </ul>
+          </div>
+        </div>
+        <div class="qp-quote" style="border-color:var(--blue)">"Quando falei sobre qualidade de vida e que seu filho ia ter conexão com outras crianças e total segurança — ele se encantou e quis comprar mais de 01 unidade." — Helingion</div>
+      </div>
+
+      <div class="qp-card qp-2 reveal" style="transition-delay:.1s">
+        <div class="qp-head">
+          <div class="qp-avatar" style="background:#E6F4ED">📈</div>
+          <div>
+            <div class="qp-name">O Investidor Analítico</div>
+            <div class="qp-role">30–48 anos · Calculista · Já ganhou com Toscana</div>
+            <div class="qp-tags"><span class="tag tag-green" style="font-size:.62rem;padding:.15rem .55rem">Alto ticket potencial</span><span class="tag tag-amber" style="font-size:.62rem;padding:.15rem .55rem">Rodrigo · Leonardo · Tiago</span></div>
+          </div>
+        </div>
+        <div class="qp-dna">
+          <div class="dna-item"><span class="dna-lbl">Perfil</span><span class="dna-val">Analítico, compara tudo</span></div>
+          <div class="dna-item"><span class="dna-lbl">Histórico</span><span class="dna-val">Ganhou valorização no Toscana</span></div>
+          <div class="dna-item"><span class="dna-lbl">Chegada</span><span class="dna-val">Espontânea / OLX</span></div>
+          <div class="dna-item"><span class="dna-lbl">Decisão</span><span class="dna-val">Sozinho, sem consultar</span></div>
+        </div>
+        <div class="qp-body">
+          <div class="qp-section">
+            <h5>O que ativa a decisão</h5>
+            <ul>
+              <li>Experiência anterior de valorização (Toscana)</li>
+              <li>Argumento de oportunidade real de ganho financeiro</li>
+              <li>Aceita 120x se o argumento financeiro for sólido</li>
+              <li>Pagamento à vista com desconto bem apresentado</li>
+            </ul>
+          </div>
+          <div class="qp-section">
+            <h5>Pós-venda valioso</h5>
+            <ul>
+              <li>Leonardo: "cliente fidelizado", almoçou no stand</li>
+              <li>Rodrigo: vai indicar amigos do trabalho</li>
+              <li>Alta propensão à recompra — perfil de múltiplos lotes</li>
+            </ul>
+          </div>
+        </div>
+        <div class="qp-quote" style="border-color:var(--green)">"Cliente já teve um lote no Villagio Toscana, vendeu e ganhou muito dinheiro de valorização! Ficou sendo meu cliente fidelizado." — Marcos Abreu</div>
+      </div>
+
+      <div class="qp-card qp-3 reveal" style="transition-delay:.2s">
+        <div class="qp-head">
+          <div class="qp-avatar" style="background:#FDF3E3">🏢</div>
+          <div>
+            <div class="qp-name">A Empresária da Região</div>
+            <div class="qp-role">35–55 anos · Casal empresário · Alto da Boa Vista</div>
+            <div class="qp-tags"><span class="tag tag-amber" style="font-size:.62rem;padding:.15rem .55rem">Patricia e marido</span><span class="tag tag-blue" style="font-size:.62rem;padding:.15rem .55rem">Comparou Toscana e Floratto</span></div>
+          </div>
+        </div>
+        <div class="qp-dna">
+          <div class="dna-item"><span class="dna-lbl">Moradia atual</span><span class="dna-val">Alto da Boa Vista (sobrado)</span></div>
+          <div class="dna-item"><span class="dna-lbl">Empresa</span><span class="dna-val">Setor Bueno / GO-080</span></div>
+          <div class="dna-item"><span class="dna-lbl">Comparou</span><span class="dna-val">Toscana, Floratto</span></div>
+          <div class="dna-item"><span class="dna-lbl">Gatilho decisivo</span><span class="dna-val">Localização + fácil acesso</span></div>
+        </div>
+        <div class="qp-body">
+          <div class="qp-section">
+            <h5>O que ativa a decisão</h5>
+            <ul>
+              <li>Melhor acesso à empresa do que concorrentes</li>
+              <li>"Fácil localização" — dito explicitamente como diferencial</li>
+              <li>Família crescendo — esposa grávida (caso Tiago)</li>
+              <li>Demonstra interesse imediato, documenta na hora</li>
+            </ul>
+          </div>
+          <div class="qp-section">
+            <h5>Atenção estratégica</h5>
+            <ul>
+              <li>Setor Balneário tem potencial — mas falta cultura de planta</li>
+              <li>Mini-Tenda no Setor Balneário seria cirúrgica</li>
+              <li>Foto aérea do condomínio com pontos estratégicos converte</li>
+            </ul>
+          </div>
+        </div>
+        <div class="qp-quote" style="border-color:var(--amber)">"O cliente gostou por ter melhor acesso, com fácil localização. Já demonstrou interesse de imediato, passou a documentação para o cadastro."</div>
+      </div>
+
+      <div class="qp-card qp-4 reveal" style="transition-delay:.3s">
+        <div class="qp-head">
+          <div class="qp-avatar" style="background:#FAEBEB">🎗️</div>
+          <div>
+            <div class="qp-name">A Compradora por Laço Afetivo</div>
+            <div class="qp-role">25–35 anos · Profissional liberal · Decisão familiar</div>
+            <div class="qp-tags"><span class="tag tag-red" style="font-size:.62rem;padding:.15rem .55rem">Persona feminina</span><span class="tag tag-green" style="font-size:.62rem;padding:.15rem .55rem">Amanda — médica, 30 anos</span></div>
+          </div>
+        </div>
+        <div class="qp-dna">
+          <div class="dna-item"><span class="dna-lbl">Profissão</span><span class="dna-val">Médica — Urias Magalhães</span></div>
+          <div class="dna-item"><span class="dna-lbl">Quem decidiu</span><span class="dna-val">A mãe comprou para ela</span></div>
+          <div class="dna-item"><span class="dna-lbl">Referência</span><span class="dna-val">Parente mora no Toscana</span></div>
+          <div class="dna-item"><span class="dna-lbl">Fechamento</span><span class="dna-val">No próprio aniversário dela</span></div>
+        </div>
+        <div class="qp-body">
+          <div class="qp-section">
+            <h5>Como a venda aconteceu</h5>
+            <ul>
+              <li>Mãe já estava decidida a comprar para ajudar a filha</li>
+              <li>Parente no Toscana eliminou toda objeção desde o início</li>
+              <li>Quase não perguntou — ouviu atentamente e fechou</li>
+              <li>O lote foi um presente de aniversário da mãe para a filha</li>
+            </ul>
+          </div>
+          <div class="qp-section">
+            <h5>Como ativar mais Amandas</h5>
+            <ul>
+              <li>Campanha "Presente que valoriza" para datas especiais</li>
+              <li>Mães e pais de profissionais liberais como público-alvo</li>
+              <li>Depoimentos do Toscana = prova social poderosa e imediata</li>
+            </ul>
+          </div>
+        </div>
+        <div class="qp-quote" style="border-color:var(--red)">"A mãe estava decidida a comprar o lote para ajudar a filha. Praticamente não perguntou, ouviu atentamente — voltou para assinar o contrato." — Christinna</div>
+      </div>
+
+      <div class="qp-card qp-5 reveal" style="transition-delay:.4s">
+        <div class="qp-head">
+          <div class="qp-avatar" style="background:#EEEDFE">✈️</div>
+          <div>
+            <div class="qp-name">O Goiano da Diáspora</div>
+            <div class="qp-role">45–65 anos · Mora fora do Brasil ou de GO</div>
+            <div class="qp-tags"><span class="tag tag-purple" style="font-size:.62rem;padding:.15rem .55rem">Francisco e Sandra — EUA</span><span class="tag tag-amber" style="font-size:.62rem;padding:.15rem .55rem">Via Instagram do gerente Wesley</span></div>
+          </div>
+        </div>
+        <div class="qp-dna">
+          <div class="dna-item"><span class="dna-lbl">Origem</span><span class="dna-val">Moram nos EUA</span></div>
+          <div class="dna-item"><span class="dna-lbl">Canal de entrada</span><span class="dna-val">Instagram pessoal do gerente</span></div>
+          <div class="dna-item"><span class="dna-lbl">Momento decisivo</span><span class="dna-val">Visita física ao terreno</span></div>
+          <div class="dna-item"><span class="dna-lbl">Dúvida central</span><span class="dna-val">Cond. e IPTU antes da entrega</span></div>
+        </div>
+        <div class="qp-body">
+          <div class="qp-section">
+            <h5>Jornada completa</h5>
+            <ul>
+              <li>Viram o Instagram pessoal do gerente Wesley</li>
+              <li>Wesley os direcionou para Alexandra e Natália</li>
+              <li>Vieram ao stand — apresentação completa da BRDU</li>
+              <li>Visitaram o terreno e mudaram de unidade após ver in loco</li>
+            </ul>
+          </div>
+          <div class="qp-section">
+            <h5>Como ativar mais dessa persona</h5>
+            <ul>
+              <li>"Seu lote em Goiânia sem sair de casa" — copy certeiro</li>
+              <li>Tour virtual 360° do terreno para quem está fora</li>
+              <li>Gerentes com presença digital são canais de captação</li>
+            </ul>
+          </div>
+        </div>
+        <div class="qp-quote" style="border-color:var(--purple)">"O Sr. Francisco e a Dona Sandra moram nos EUA. Viram a página do meu gerente Wesley no Instagram — a página é sobre o Villagio Veneto." — Alexandra</div>
+      </div>
+    </div>
+
+    <div class="insight reveal" style="margin-top:2rem"><p><strong>Padrão de fechamento identificado nos relatos:</strong> mais da metade dos compradores fecha na própria visita quando bem atendido. O stand precisa estar permanentemente pronto. E a visita ao terreno físico foi decisiva em pelo menos dois casos documentados — leve sempre o cliente ao terreno.</p></div>
+  </div>
+</section>
+
+<!-- 04 EMPATIA -->
+<section id="empatia">
+  <div class="container">
+    <p class="section-eyebrow reveal">04 · Mapa de Empatia</p>
+    <h2 class="section-title reveal">O que o comprador pensa, sente e teme</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Baseado na persona principal — Marcos, o Empresário Consolidado (45% da base).</p>
+    <div class="empathy-grid">
+      <div class="empathy-cell ec-vê reveal"><h4>👁 Vê</h4><ul><li>Crescimento acelerado da região noroeste de Goiânia</li><li>Amigos e conhecidos comprando lotes e construindo</li><li>Anúncios de lançamentos no feed e no WhatsApp</li><li>Alta contínua dos preços de imóveis prontos na cidade</li></ul></div>
+      <div class="empathy-cell ec-ouve reveal" style="transition-delay:.1s"><h4>👂 Ouve</h4><ul><li>Indicações de colegas empresários que já compraram</li><li>Corretor descrevendo valorização e potencial da região</li><li>Família comentando sobre ter casa e terreno próprios</li><li>Notícias sobre inflação e preservação de patrimônio</li></ul></div>
+      <div class="empathy-cell ec-pensa reveal" style="transition-delay:.15s"><h4>💭 Pensa e Sente</h4><ul><li>"Preciso proteger meu dinheiro" da inflação e instabilidade</li><li>Ansiedade com burocracia e documentação do lote</li><li>Orgulho de ter terreno próprio para construir do seu jeito</li><li>Dúvida: comprar agora ou esperar a região valorizar mais?</li></ul></div>
+      <div class="empathy-cell ec-faz reveal" style="transition-delay:.2s"><h4>🗣 Fala e Faz</h4><ul><li>Pesquisa no Google e Instagram antes de ligar</li><li>Pede opinião de 2 a 3 pessoas de confiança antes de decidir</li><li>Negocia condições e prazos de pagamento com o corretor</li><li>Exige planta, certidão e matrícula logo na visita</li></ul></div>
+      <div class="empathy-cell ec-dores reveal" style="transition-delay:.25s"><h4>😓 Dores</h4><ul><li>Medo real de golpe ou irregularidade documental no lote</li><li>Incerteza sobre o prazo de chegada da infraestrutura</li><li>Dificuldade de comparar diferentes empreendimentos</li><li>Receio de ficar preso em ativo sem liquidez por anos</li></ul></div>
+      <div class="empathy-cell ec-ganhos reveal" style="transition-delay:.3s"><h4>🏆 Ganhos Desejados</h4><ul><li>Lote valorizado, escriturado e sem pendências</li><li>Liberdade para construir no próprio ritmo</li><li>Segurança e realização patrimonial para a família</li><li>Processo de compra rápido, claro e sem surpresas</li></ul></div>
+    </div>
+    <div class="insight reveal"><p>A maior barreira é o <strong>medo de irregularidade documental e falta de liquidez</strong>. Neutralizar com transparência ativa — certidões visíveis no stand, histórico de vendas e depoimentos de compradores — pode reduzir o ciclo de decisão de semanas para dias.</p></div>
+  </div>
+</section>
+
+<!-- 05 SWOT -->
+<section id="swot">
+  <div class="container">
+    <p class="section-eyebrow reveal">05 · Matriz SWOT</p>
+    <h2 class="section-title reveal">Diagnóstico estratégico</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Fatores internos e externos com base no desempenho de vendas e perfil da base de clientes.</p>
+    <div class="swot-grid">
+      <div class="swot-cell swot-s reveal"><h3>💪 Forças (Strengths)</h3><ul><li>Lançamento arrasador: 138 vendas em dezembro/2025</li><li>HUNA como parceira âncora — 34% de todas as vendas</li><li>Comprador qualificado: renda média-alta dominante</li><li>Taxa de moradia de 77% gera indicação orgânica natural</li><li>Múltiplas corretoras garantem capilaridade de canal</li><li>Concentração em Goiânia facilita atendimento e pós-venda</li></ul></div>
+      <div class="swot-cell swot-w reveal" style="transition-delay:.1s"><h3>⚠️ Fraquezas (Weaknesses)</h3><ul><li>Dependência excessiva da HUNA — risco crítico de concentração</li><li>Instagram e WhatsApp com apenas 11 registros combinados</li><li>19% dos registros sem dados demográficos — CRM precário</li><li>Finalidade não informada em 40% dos registros</li><li>Colapso pós-lançamento: de 138 para ~19 vendas/mês</li><li>Alcance geográfico quase nulo fora de Goiás</li></ul></div>
+      <div class="swot-cell swot-o reveal" style="transition-delay:.15s"><h3>🚀 Oportunidades (Opportunities)</h3><ul><li>Público feminino subatendido (22%) — nicho inexplorado</li><li>Divorciados (11%): recomposição patrimonial ativa</li><li>Profissionais liberais como investidores recorrentes e fiéis</li><li>Indicação já é 2º canal — programa formal pode triplicar</li><li>Empresas (CNPJ) = segmento B2B via BRDU e parceiros</li><li>Compradores de RJ/SP/PA: potencial nacional via digital</li></ul></div>
+      <div class="swot-cell swot-t reveal" style="transition-delay:.2s"><h3>⛈ Ameaças (Threats)</h3><ul><li>Desaceleração pós-lançamento precisa ser sustentada</li><li>Concorrência de FIIs e renda fixa para o perfil investidor</li><li>Alta da Selic encarece financiamento e reduz demanda</li><li>Dependência de Goiânia — crise local = impacto desproporcional</li><li>Custo de aquisição via internet crescendo e saturando</li><li>Compradores acima de 60 com restrição em financiamento</li></ul></div>
+    </div>
+    <div class="insight reveal"><p><strong>Direção SO recomendada:</strong> usar a força do parceiro HUNA e a satisfação dos compradores para capturar a oportunidade de indicação estruturada e o nicho feminino subatendido. Paralelamente, diversificar corretoras para mitigar a ameaça de concentração excessiva.</p></div>
+  </div>
+</section>
+
+<!-- 06 ESTRATEGIAS -->
+<section id="estrategias">
+  <div class="container">
+    <p class="section-eyebrow reveal">06 · Estratégias de Vendas</p>
+    <h2 class="section-title reveal">Cinco iniciativas prioritárias</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Derivadas diretamente da análise de perfil, canais e diagnóstico SWOT. Clique em cada estratégia para expandir.</p>
+    <div class="reveal">
+      <div class="strat-block open"><div class="strat-header" onclick="toggleStrat(this)"><div class="strat-num" style="background:var(--green)">01</div><div class="strat-title">Programa de Indicação Estruturado</div><span class="tag tag-green">Curto prazo</span><span class="strat-toggle">+</span></div><div class="strat-body"><div class="strat-actions"><div class="strat-action" style="border-color:var(--green)"><h4>Clube de Embaixadores</h4><p>Recompensar compradores que indicam com R$ 1.500 em crédito de ITBI ou desconto em corretagem. Indicação já é o 2º canal sem nenhum programa — formalizar pode triplicar o volume com custo mínimo.</p></div><div class="strat-action" style="border-color:var(--green)"><h4>Kit "Mostre para um Amigo"</h4><p>Material digital personalizado com link rastreável enviado via WhatsApp. Segmentar por bairro: compradores de Goiânia 2 tendem a indicar vizinhos do mesmo setor, acelerando conversão por proximidade.</p></div></div></div></div>
+      <div class="strat-block"><div class="strat-header" onclick="toggleStrat(this)"><div class="strat-num" style="background:var(--blue)">02</div><div class="strat-title">Campanha Mulher Compradora</div><span class="tag tag-blue">Curto prazo</span><span class="strat-toggle">+</span></div><div class="strat-body"><div class="strat-actions"><div class="strat-action" style="border-color:var(--blue)"><h4>Segmentação feminina no digital</h4><p>Apenas 22% são mulheres em produto de moradia — falha de comunicação, não de interesse. Campanha Instagram/Facebook focada em autonomia financeira com depoimentos de compradoras reais como prova social.</p></div><div class="strat-action" style="border-color:var(--blue)"><h4>Evento "Investimento no Feminino"</h4><p>Parceria com grupos de empreendedoras de Goiânia. Divorciadas (11% da base) são público-chave por recomposição patrimonial pós-separação. Momento de decisão altamente motivado.</p></div></div></div></div>
+      <div class="strat-block"><div class="strat-header" onclick="toggleStrat(this)"><div class="strat-num" style="background:var(--amber)">03</div><div class="strat-title">Diversificação de Corretoras</div><span class="tag tag-amber">Médio prazo</span><span class="strat-toggle">+</span></div><div class="strat-body"><div class="strat-actions"><div class="strat-action" style="border-color:var(--amber)"><h4>Onboarding de novas parceiras</h4><p>HUNA representa 34% — risco crítico de concentração. Identificar corretoras dos bairros top e fazer onboarding ativo com bonificação por meta mensal e material exclusivo de apoio.</p></div><div class="strat-action" style="border-color:var(--amber)"><h4>Meta consolidada Grupo Adão</h4><p>O grupo Adão soma ~40% mas fragmentado em 8+ filiais. Meta-bloco com bônus trimestral cria competição saudável e o transforma no maior parceiro como bloco unificado.</p></div></div></div></div>
+      <div class="strat-block"><div class="strat-header" onclick="toggleStrat(this)"><div class="strat-num" style="background:var(--red)">04</div><div class="strat-title">Profissional Liberal como Investidor</div><span class="tag tag-amber">Médio prazo</span><span class="strat-toggle">+</span></div><div class="strat-body"><div class="strat-actions"><div class="strat-action" style="border-color:var(--red)"><h4>Proposta: Compre 2, Alugue 1</h4><p>Médicos, engenheiros e advogados têm perfil de investidor recorrente. Apresentação comparativa TIR do lote + construção vs. CDB/FII. Desconto progressivo para compra de 2 ou mais lotes simultâneos.</p></div><div class="strat-action" style="border-color:var(--red)"><h4>Eventos em OAB, CREA, Hospitais</h4><p>Levar a Tenda para hubs de profissionais liberais. Apresentação de 20 minutos com tablet — o corretor vai até o cliente em vez de esperar. Modelo de visita ativa de alta conversão.</p></div></div></div></div>
+      <div class="strat-block"><div class="strat-header" onclick="toggleStrat(this)"><div class="strat-num" style="background:var(--purple)">05</div><div class="strat-title">Expansão Digital Nacional</div><span class="tag tag-grey">Longo prazo</span><span class="strat-toggle">+</span></div><div class="strat-body"><div class="strat-actions"><div class="strat-action" style="border-color:var(--purple)"><h4>Campanha diáspora goiana</h4><p>Compradores de RJ, SP e PA revelam um mercado de goianos fora do estado querendo lote na terra natal. Meta Ads segmentando interesse em Goiânia + localização fora de GO.</p></div><div class="strat-action" style="border-color:var(--purple)"><h4>Corretores parceiros em outras praças</h4><p>Parceria com imobiliárias em Brasília e capitais do Norte/Nordeste. Tour virtual 360° como ferramenta de apoio para venda remota com comissão diferenciada.</p></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 CANAIS -->
+<section id="canais">
+  <div class="container">
+    <p class="section-eyebrow reveal">07 · Matriz de Canais</p>
+    <h2 class="section-title reveal">Eficiência vs. Potencial</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Avaliação estratégica de cada canal com base nos registros de origem de cada venda.</p>
+    <div class="reveal" style="overflow-x:auto">
+      <table class="channels-table">
+        <thead><tr><th>Canal</th><th>Registros</th><th>Eficiência</th><th>Potencial</th><th>Ação recomendada</th></tr></thead>
+        <tbody>
+          <tr><td>Internet (Google/SEO)</td><td>75</td><td><span class="tag tag-green">Alta</span></td><td><span class="tag tag-amber">Médio</span></td><td>Manter. Testar Google Ads por CEP dos bairros com maior concentração de compradores.</td></tr>
+          <tr><td>Indicação</td><td>25</td><td><span class="tag tag-green">Alta</span></td><td><span class="tag tag-green">Alto</span></td><td>Formalizar com programa de embaixadores e recompensa. Menor CAC, maior taxa de conversão.</td></tr>
+          <tr><td>Facebook Ads</td><td>20</td><td><span class="tag tag-amber">Média</span></td><td><span class="tag tag-amber">Médio</span></td><td>Segmentar faixa 38–55 anos, casados, interesse em imóveis e finanças em Goiânia.</td></tr>
+          <tr><td>Tenda / Evento</td><td>14</td><td><span class="tag tag-green">Alta</span></td><td><span class="tag tag-green">Alto</span></td><td>Realizar mini-tendas mensais nos bairros com maior concentração de compradores.</td></tr>
+          <tr><td>Ação Externa</td><td>9</td><td><span class="tag tag-amber">Média</span></td><td><span class="tag tag-green">Alto</span></td><td>Ir até hubs de profissionais liberais, condomínios empresariais e feiras do setor.</td></tr>
+          <tr><td>WhatsApp</td><td>7</td><td><span class="tag tag-red">Baixa</span></td><td><span class="tag tag-green">Alto</span></td><td>Criar canal oficial com chatbot de qualificação. Alto potencial completamente inexplorado.</td></tr>
+          <tr><td>Instagram</td><td>4</td><td><span class="tag tag-red">Baixa</span></td><td><span class="tag tag-green">Alto</span></td><td>Produzir Reels de obra, depoimentos e tours. Pré-requisito para o público de 25 a 35 anos.</td></tr>
+          <tr><td>Não informado</td><td>39</td><td><span class="tag tag-grey">—</span></td><td><span class="tag tag-grey">—</span></td><td>Canal de origem deve ser campo obrigatório em todo novo cadastro. Enriquecer o CRM.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight reveal"><p><strong>Indicação + Tenda + Ação Externa</strong> somam apenas 48 registros mas têm custo de aquisição muito menor e conversão comprovadamente superior à mídia paga. Dobrar a aposta nesses canais humanos pode sustentar o ritmo pós-lançamento sem aumentar CAC.</p></div>
+  </div>
+</section>
+
+<!-- 08 MAPA -->
+<section id="mapa">
+  <div class="container">
+    <p class="section-eyebrow reveal">08 · Mapa de Compradores</p>
+    <h2 class="section-title reveal">De onde vieram os compradores</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">103 bairros únicos mapeados sobre o mapa real de Goiânia. Passe o mouse ou clique nos pins para ver bairro e concentração de compradores.</p>
+    <div class="map-controls reveal">
+      <button class="map-btn active" onclick="focusGyn(this)">Goiânia e região</button>
+      <button class="map-btn" onclick="focusAll(this)">Ver todos (Brasil)</button>
+    </div>
+    <div id="gyn-map"></div>
+    <div class="map-legend reveal">
+      <div class="leg-item"><div class="leg-dot" style="background:#1A56A0"></div>Goiânia</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#1A6B45"></div>Região metropolitana / interior GO</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#C4832A"></div>Outros estados</div>
+      <div style="margin-left:auto;font-size:.73rem;color:var(--grey-lt)">Tamanho do pin proporcional ao nº de compradores</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 FUNIL -->
+<section id="funil">
+  <div class="container">
+    <p class="section-eyebrow reveal">09 · Funil de Conversão</p>
+    <h2 class="section-title reveal">Onde estão os gargalos</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Estimativa do funil completo com base no mix de canais e taxa de conversão observada.</p>
+    <div class="funnel reveal">
+      <div class="funnel-row"><span class="funnel-label">Alcance — leads gerados</span><div class="funnel-track"><div class="funnel-fill" style="background:var(--blue)" data-pct="100">~4.000 / mês</div></div><span class="funnel-pct">100%</span></div>
+      <div class="funnel-row"><span class="funnel-label">Interesse qualificado</span><div class="funnel-track"><div class="funnel-fill" style="background:#2B74C0" data-pct="70">~2.800 leads</div></div><span class="funnel-pct">70%</span></div>
+      <div class="funnel-row"><span class="funnel-label">Visita / Tenda</span><div class="funnel-track"><div class="funnel-fill" style="background:var(--green)" data-pct="35">~1.400 visitas</div></div><span class="funnel-pct">35%</span></div>
+      <div class="funnel-row"><span class="funnel-label">Proposta emitida</span><div class="funnel-track"><div class="funnel-fill" style="background:var(--amber)" data-pct="18">~720 propostas</div></div><span class="funnel-pct">18%</span></div>
+      <div class="funnel-row"><span class="funnel-label">Venda concluída</span><div class="funnel-track"><div class="funnel-fill" style="background:var(--red)" data-pct="5">195 vendas</div></div><span class="funnel-pct">~5%</span></div>
+    </div>
+    <div class="two-cols" style="margin-top:2rem">
+      <div class="reveal" style="background:var(--red-lt);border-radius:var(--r-lg);padding:1.5rem;border-top:3px solid var(--red)"><h4 style="font-family:'Sora',sans-serif;font-size:.85rem;font-weight:700;color:var(--red);margin-bottom:.7rem">🚧 Gargalo: Proposta → Venda (25% conv.)</h4><p style="font-size:.85rem;color:var(--ink);line-height:1.65">A maior perda ocorre no fechamento. Assinatura digital, condições flexíveis e urgência real (unidades restantes por quadra) podem elevar a conversão de 25% para 40%.</p></div>
+      <div class="reveal" style="background:var(--green-lt);border-radius:var(--r-lg);padding:1.5rem;border-top:3px solid var(--green);transition-delay:.1s"><h4 style="font-family:'Sora',sans-serif;font-size:.85rem;font-weight:700;color:var(--green);margin-bottom:.7rem">💡 Oportunidade: Remarketing</h4><p style="font-size:.85rem;color:var(--ink);line-height:1.65">Os ~1.200 leads que visitaram mas não compraram são o público mais quente disponível. Campanha de reengajamento com oferta especial pode gerar 20–30 vendas com CAC mínimo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 PLANO -->
+<section id="plano">
+  <div class="container">
+    <p class="section-eyebrow reveal">10 · Plano de Ação</p>
+    <h2 class="section-title reveal">Dez iniciativas consolidadas</h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Priorizadas por prazo, impacto esperado e esforço de implementação.</p>
+    <div class="reveal" style="overflow-x:auto">
+      <table class="action-table">
+        <thead><tr><th>#</th><th>Iniciativa</th><th>Prazo</th><th>Impacto</th><th>Esforço</th><th>KPI Principal</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td>Programa de indicação formal (Clube de Embaixadores)</td><td><span class="tag tag-blue">Curto</span></td><td><span class="tag tag-green">Alto</span></td><td><span class="tag tag-green">Baixo</span></td><td>Vendas via indicação / mês</td></tr>
+          <tr><td>02</td><td>Campanha Instagram Reels + Meta Ads público feminino</td><td><span class="tag tag-blue">Curto</span></td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-amber">Médio</span></td><td>% leads femininos no funil</td></tr>
+          <tr><td>03</td><td>Mini-tendas mensais nos bairros de maior concentração</td><td><span class="tag tag-blue">Curto</span></td><td><span class="tag tag-green">Alto</span></td><td><span class="tag tag-amber">Médio</span></td><td>Vendas por evento realizado</td></tr>
+          <tr><td>04</td><td>WhatsApp Business + chatbot de qualificação de leads</td><td><span class="tag tag-blue">Curto</span></td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-green">Baixo</span></td><td>Leads qualificados / canal</td></tr>
+          <tr><td>05</td><td>Onboarding de 3 novas corretoras com bonificação</td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-green">Alto</span></td><td><span class="tag tag-amber">Médio</span></td><td>Diversificação de canal</td></tr>
+          <tr><td>06</td><td>Meta consolidada Grupo Adão + bônus trimestral</td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-green">Alto</span></td><td><span class="tag tag-green">Baixo</span></td><td>Vendas grupo Adão / trim.</td></tr>
+          <tr><td>07</td><td>Apresentação de TIR para profissionais liberais</td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-green">Baixo</span></td><td>Vendas perfil investidor</td></tr>
+          <tr><td>08</td><td>Eventos presenciais em OAB, CREA e hospitais</td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-amber">Médio</span></td><td>Vendas por evento B2B</td></tr>
+          <tr><td>09</td><td>Remarketing dos ~1.200 visitantes sem conversão</td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-green">Alto</span></td><td><span class="tag tag-green">Baixo</span></td><td>% reengajamento convertido</td></tr>
+          <tr><td>10</td><td>Tour virtual 360° + campanha nacional diáspora goiana</td><td><span class="tag tag-red">Longo</span></td><td><span class="tag tag-amber">Médio</span></td><td><span class="tag tag-red">Alto</span></td><td>Vendas fora do estado de GO</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-eyebrow reveal" style="margin-top:2.5rem;margin-bottom:.6rem">3 perguntas que mudariam os resultados</p>
+    <div class="questions-grid">
+      <div class="question-card reveal" style="background:var(--blue-lt);border-color:var(--blue)"><h4>Qual é o NPS dos 195 compradores hoje?</h4><p>Se indicação espontânea gerou 25 vendas sem estrutura, NPS alto significa um exército de promotores esperando ativação. NPS baixo sinaliza risco de distrato e reputação negativa.</p></div>
+      <div class="question-card reveal" style="background:var(--green-lt);border-color:var(--green);transition-delay:.1s"><h4>O que a HUNA faz diferente das demais corretoras?</h4><p>34% das vendas têm um motivo específico — é o script, o território, a velocidade de resposta ou a relação com a incorporadora. Replicar isso nas demais corretoras sem custo adicional.</p></div>
+      <div class="question-card reveal" style="background:var(--amber-lt);border-color:var(--amber);transition-delay:.2s"><h4>Por que as mulheres não estão comprando?</h4><p>22% de compradoras em produto de moradia é falha de comunicação, não de interesse. A resposta está em 10 conversas diretas com mulheres do perfil que não compraram.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container" style="text-align:center">
+    <p class="hero-eyebrow reveal" style="display:block">Ação imediata · Semana 1</p>
+    <h2 class="reveal" style="color:var(--amber);font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:.8rem;font-family:'Playfair Display',serif">Antes de qualquer campanha</h2>
+    <div class="cta-box reveal" style="transition-delay:.1s">
+      <p style="color:rgba(255,255,255,.75);font-size:.95rem;line-height:1.8">
+        Ligar para os <strong>25 compradores que vieram de indicação</strong> e fazer uma única pergunta:<br>
+        <em style="color:rgba(255,255,255,.9)">"O que você falou para a pessoa que indicou que a fez comprar?"</em><br><br>
+        Essa resposta é o script de vendas que já funciona, na voz de quem já comprou.<br>
+        <strong>Custa zero — e nenhuma análise substitui isso.</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>Villágio Vêneto · Análise Estratégica de Clientes · Março 2026 · Uso Interno · Confidencial</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('visible');
+    e.target.querySelectorAll('.bar-fill[data-pct]').forEach(b => { setTimeout(() => b.style.width = b.dataset.pct + '%', 100); });
+    e.target.querySelectorAll('.funnel-fill[data-pct]').forEach(f => { setTimeout(() => f.style.width = f.dataset.pct + '%', 150); });
+    e.target.querySelectorAll('.age-bar[data-h]').forEach(b => { setTimeout(() => b.style.height = b.dataset.h + 'px', 100); });
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+document.querySelectorAll('.bar-fill[data-pct]').forEach(b => b.style.width = '0%');
+document.querySelectorAll('.funnel-fill[data-pct]').forEach(f => f.style.width = '0%');
+document.querySelectorAll('.age-bar[data-h]').forEach(b => { b.style.height = '0px'; b.style.transition = 'height 1.2s cubic-bezier(.16,1,.3,1)'; });
+
+const navObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const lnk = document.querySelector('.nav-links a[href="#' + e.target.id + '"]');
+    if (lnk) lnk.classList.add('active');
+  });
+}, { threshold: 0.35 });
+document.querySelectorAll('section[id]').forEach(s => navObs.observe(s));
+
+function toggleStrat(h) { h.closest('.strat-block').classList.toggle('open'); }
+
+// LEAFLET MAP
+const hoods = [
+  ["Goiânia 2",-16.735,-49.372,12,"Goiânia","GO","#1A56A0"],
+  ["Jardim Balneário Meia Ponte",-16.741,-49.310,8,"Goiânia","GO","#1A56A0"],
+  ["Setor Campinas",-16.661,-49.269,6,"Goiânia","GO","#1A56A0"],
+  ["Setor Estrela Dalva",-16.732,-49.321,6,"Goiânia","GO","#1A56A0"],
+  ["Setor Urias Magalhães",-16.693,-49.264,5,"Goiânia","GO","#1A56A0"],
+  ["Vila João Vaz",-16.731,-49.238,5,"Goiânia","GO","#1A56A0"],
+  ["Setor Criméia Oeste",-16.703,-49.299,4,"Goiânia","GO","#1A56A0"],
+  ["Jardim Fonte Nova",-16.738,-49.314,4,"Goiânia","GO","#1A56A0"],
+  ["Setor Morada do Sol",-16.737,-49.319,4,"Goiânia","GO","#1A56A0"],
+  ["Panorama Parque",-16.711,-49.271,4,"Goiânia","GO","#1A56A0"],
+  ["Condomínio do Lago 3ª Etapa",-16.749,-49.340,4,"Goiânia","GO","#1A56A0"],
+  ["Parque das Flores",-16.735,-49.312,4,"Goiânia","GO","#1A56A0"],
+  ["Residencial Recanto do Bosque",-16.738,-49.318,3,"Goiânia","GO","#1A56A0"],
+  ["Vila Jardim São Judas Tadeu",-16.749,-49.369,3,"Goiânia","GO","#1A56A0"],
+  ["Setor Progresso",-16.706,-49.287,3,"Goiânia","GO","#1A56A0"],
+  ["Vila São Luiz",-16.706,-49.300,3,"Goiânia","GO","#1A56A0"],
+  ["Residencial Humaitá",-16.737,-49.315,3,"Goiânia","GO","#1A56A0"],
+  ["Res. Alphaville Flamboyant",-16.723,-49.232,3,"Goiânia","GO","#1A56A0"],
+  ["Setor Oeste",-16.690,-49.262,2,"Goiânia","GO","#1A56A0"],
+  ["Vila Jaraguá",-16.750,-49.352,2,"Goiânia","GO","#1A56A0"],
+  ["Jardim Diamantina",-16.736,-49.308,2,"Goiânia","GO","#1A56A0"],
+  ["Parque Balneário",-16.740,-49.312,2,"Goiânia","GO","#1A56A0"],
+  ["Jardim Nova Esperança",-16.740,-49.322,2,"Goiânia","GO","#1A56A0"],
+  ["Conjunto Vera Cruz",-16.649,-49.237,2,"Goiânia","GO","#1A56A0"],
+  ["Setor Três Marias",-16.752,-49.285,2,"Goiânia","GO","#1A56A0"],
+  ["Vila Itatiaia",-16.750,-49.371,2,"Goiânia","GO","#1A56A0"],
+  ["Setor Alto do Vale",-16.736,-49.315,2,"Goiânia","GO","#1A56A0"],
+  ["Vila Jardim Pompéia",-16.748,-49.370,2,"Goiânia","GO","#1A56A0"],
+  ["Setor Sul",-16.715,-49.256,2,"Goiânia","GO","#1A56A0"],
+  ["Setor Empresarial",-16.733,-49.307,2,"Goiânia","GO","#1A56A0"],
+  ["Setor Gentil Meireles",-16.726,-49.296,2,"Goiânia","GO","#1A56A0"],
+  ["Parque das Nações",-16.735,-49.314,2,"Goiânia","GO","#1A56A0"],
+  ["Faz. São Domingos",-16.745,-49.358,2,"Goiânia","GO","#1A56A0"],
+  ["Residencial Barravento",-16.737,-49.313,2,"Goiânia","GO","#1A56A0"],
+  ["Res. Village do Parque / São Luiz",-16.706,-49.301,2,"Goiânia","GO","#1A56A0"],
+  ["Setor Negrão de Lima",-16.651,-49.249,2,"Goiânia","GO","#1A56A0"],
+  ["Vila Isaura",-16.745,-49.347,1,"Goiânia","GO","#1A56A0"],
+  ["Jardim América",-16.699,-49.269,1,"Goiânia","GO","#1A56A0"],
+  ["Parque Atheneu",-16.689,-49.213,1,"Goiânia","GO","#1A56A0"],
+  ["Jardim Ipê",-16.738,-49.311,1,"Goiânia","GO","#1A56A0"],
+  ["Da Vitória",-16.739,-49.323,1,"Goiânia","GO","#1A56A0"],
+  ["Jardins Valência",-16.723,-49.228,1,"Goiânia","GO","#1A56A0"],
+  ["Setor Aeroporto",-16.726,-49.216,1,"Goiânia","GO","#1A56A0"],
+  ["Setor Marechal Rondon",-16.703,-49.299,1,"Goiânia","GO","#1A56A0"],
+  ["Setor Leste Universitário",-16.686,-49.246,1,"Goiânia","GO","#1A56A0"],
+  ["Setor Marista",-16.710,-49.254,1,"Goiânia","GO","#1A56A0"],
+  ["Solange Park I",-16.739,-49.328,1,"Goiânia","GO","#1A56A0"],
+  ["Res. Bosque dos Buritis",-16.738,-49.323,1,"Goiânia","GO","#1A56A0"],
+  ["Residencial Granville",-16.752,-49.286,1,"Goiânia","GO","#1A56A0"],
+  ["Residencial Villagio Toscana",-16.750,-49.369,1,"Goiânia","GO","#1A56A0"],
+  ["Setor Central",-16.677,-49.264,1,"Goiânia","GO","#1A56A0"],
+  ["Jardim Colorado",-16.737,-49.319,1,"Goiânia","GO","#1A56A0"],
+  ["Residencial Aldeia do Vale",-16.740,-49.367,1,"Goiânia","GO","#1A56A0"],
+  ["Residencial Brisas da Mata",-16.737,-49.318,1,"Goiânia","GO","#1A56A0"],
+  ["Condomínio do Lago 2ª Etapa",-16.747,-49.339,1,"Goiânia","GO","#1A56A0"],
+  ["Residencial Alice Barbosa",-16.750,-49.382,1,"Goiânia","GO","#1A56A0"],
+  ["Aeroporto/Santa Genoveva",-16.632,-49.221,1,"Goiânia","GO","#1A56A0"],
+  ["Jardim Guanabara",-16.749,-49.356,1,"Goiânia","GO","#1A56A0"],
+  ["Setor São José",-16.661,-49.255,1,"Goiânia","GO","#1A56A0"],
+  ["Balneário Gran Viena",-16.741,-49.311,1,"Goiânia","GO","#1A56A0"],
+  ["Vila Cristina",-16.730,-49.296,1,"Goiânia","GO","#1A56A0"],
+  ["Nova Suíça",-16.694,-49.279,1,"Goiânia","GO","#1A56A0"],
+  ["Jardim Goiás",-16.720,-49.248,1,"Goiânia","GO","#1A56A0"],
+  ["Res. Alice Barbosa Extensão",-16.750,-49.383,1,"Goiânia","GO","#1A56A0"],
+  ["Jardim Curitiba",-16.737,-49.327,1,"Goiânia","GO","#1A56A0"],
+  ["Reserva das Águas",-16.739,-49.312,1,"Goiânia","GO","#1A56A0"],
+  ["Setor Jaó",-16.695,-49.239,1,"Goiânia","GO","#1A56A0"],
+  ["Cond. Alto da Boa Vista",-16.730,-49.239,1,"Goiânia","GO","#1A56A0"],
+  ["Setor Parque Tremendão",-16.735,-49.323,1,"Goiânia","GO","#1A56A0"],
+  ["Parque Industrial Paulista",-16.743,-49.335,1,"Goiânia","GO","#1A56A0"],
+  ["Pedras de Transformação",-16.739,-49.327,1,"Goiânia","GO","#1A56A0"],
+  ["Setor Pedro Ludovico",-16.696,-49.250,1,"Goiânia","GO","#1A56A0"],
+  ["Setor Norte Ferroviário",-16.661,-49.272,1,"Goiânia","GO","#1A56A0"],
+  ["Jardim Petrópolis",-16.743,-49.334,1,"Goiânia","GO","#1A56A0"],
+  ["Chácaras Anhan",-16.756,-49.274,1,"Goiânia","GO","#1A56A0"],
+  ["Res. Hugo de Moraes",-16.734,-49.309,1,"Goiânia","GO","#1A56A0"],
+  ["Vila Brasília",-16.820,-49.244,2,"Aparecida de Goiás","GO","#1A6B45"],
+  ["Cidade Livre",-16.823,-49.247,1,"Aparecida de Goiânia","GO","#1A6B45"],
+  ["Jardim Imperial",-16.819,-49.246,1,"Aparecida de Goiânia","GO","#1A6B45"],
+  ["Setor Central (Campos Belos)",-13.035,-46.773,1,"Campos Belos","GO","#1A6B45"],
+  ["Riacho Fundo I",-15.870,-48.088,1,"Brasília","DF","#1A6B45"],
+  ["Laranjeiras",-22.930,-43.184,1,"Rio de Janeiro","RJ","#C4832A"],
+  ["Barra da Tijuca",-23.010,-43.370,2,"Rio de Janeiro","RJ","#C4832A"],
+  ["Vila Rio Branco",-23.540,-46.630,1,"São Paulo","SP","#C4832A"],
+  ["Kubitschek de Oliveira",-22.760,-47.155,1,"Paulínia","SP","#C4832A"],
+  ["Maracanã I",-2.443,-54.708,1,"Santarém","PA","#C4832A"],
+  ["Pituba",-12.972,-38.501,1,"Salvador","BA","#C4832A"],
+];
+
+const map = L.map('gyn-map', { scrollWheelZoom: false, zoomControl: true });
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18, opacity: 0.88,
+  attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+map.fitBounds([[-16.85,-49.48],[-16.55,-49.15]]);
+
+function makePin(n, color) {
+  const d = Math.round(13 + n * 2.6);
+  const fs = n > 9 ? 9 : n > 4 ? 10 : 11;
+  return L.divIcon({
+    className: '',
+    html: '<div style="width:'+d+'px;height:'+d+'px;border-radius:50%;background:'+color+';border:2.5px solid rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;font-size:'+fs+'px;font-weight:700;color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.32);cursor:pointer;font-family:sans-serif">'+n+'</div>',
+    iconSize: [d,d], iconAnchor: [d/2,d/2], popupAnchor: [0,-d/2-4]
+  });
+}
+
+hoods.forEach(function(h) {
+  var name=h[0],lat=h[1],lng=h[2],n=h[3],city=h[4],uf=h[5],color=h[6];
+  var m = L.marker([lat,lng], { icon: makePin(n,color) }).addTo(map);
+  m.bindPopup('<div class="pop-inner"><div class="pop-name">'+name+'</div><div class="pop-city">'+city+' · '+uf+'</div><div class="pop-count" style="color:'+color+'">'+n+' <span>comprador'+(n>1?'es':'')+'</span></div></div>', { maxWidth:220, closeButton:false });
+  m.on('mouseover', function() { this.openPopup(); });
+  m.on('click', function() { this.openPopup(); });
+});
+
+function focusGyn(btn) {
+  map.fitBounds([[-16.85,-49.48],[-16.55,-49.15]], { animate:true, duration:0.7 });
+  document.querySelectorAll('.map-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+function focusAll(btn) {
+  map.fitBounds([[-26,-55],[0,-42]], { animate:true, duration:0.7 });
+  document.querySelectorAll('.map-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
